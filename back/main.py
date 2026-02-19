@@ -16,4 +16,14 @@ async def root():
 async def root():
     return "THIS IS THE RACCOON PAGE"
 
+@app.get("/users")
+async def root():
+    return "RACCONS RULE"
 
+@app.get("/testingnoise")
+async def root():
+    return "JUST TESTING THE NOISE"
+
+@app.get("/home")
+async def root():
+    return {"key": "value"}
