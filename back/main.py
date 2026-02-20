@@ -27,3 +27,9 @@ async def root():
 @app.get("/home")
 async def root():
     return {"key": "value"}
+
+@app.get("/events")
+async def root():
+    return {"key": "value"}
+    # use the event sourcing py lib here - store events in event store and use snapshots
+
