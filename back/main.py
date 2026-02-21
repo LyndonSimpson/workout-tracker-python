@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from controller.user import user
 
 app = FastAPI()
 
@@ -19,6 +20,10 @@ async def root():
 @app.get("/users")
 async def root():
     return "RACCONS RULE"
+
+@app.get("/lyndon")
+async def root():
+    return user()
 
 @app.get("/testingnoise")
 async def root():
