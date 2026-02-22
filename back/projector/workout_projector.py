@@ -2,7 +2,7 @@ import json
 from typing import Any
 from uuid import UUID
 
-from eventsourcing.application import AggregateNotFound
+from eventsourcing.application import AggregateNotFoundError
 
 from application.workout_service import WorkoutApplication
 from datamapper.workout_mapper import WorkoutDataMapper
@@ -82,7 +82,7 @@ class WorkoutProjector:
 
                     try:
                         workout = self._application.get_workout(workout_id)
-                    except AggregateNotFound:
+                    except AggregateNotFoundError:
                         last_notification_id = int(notification.id)
                         continue
 
@@ -215,3 +215,4 @@ class WorkoutProjector:
         if isinstance(value, UUID):
             return value
         return UUID(str(value))
+

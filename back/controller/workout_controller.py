@@ -1,6 +1,6 @@
 from uuid import UUID
 
-from eventsourcing.application import AggregateNotFound
+from eventsourcing.application import AggregateNotFoundError
 
 from application.workout_service import WorkoutApplication
 from datamapper.workout_mapper import WorkoutDataMapper
@@ -56,7 +56,7 @@ class WorkoutController:
     def get_workout(self, workout_id: UUID) -> dict[str, object]:
         try:
             workout = self._application.get_workout(workout_id)
-        except AggregateNotFound:
+        except AggregateNotFoundError:
             raise
         return self._mapper.aggregate_to_detail(workout)
 
@@ -64,3 +64,4 @@ class WorkoutController:
         self._projector.catch_up()
         rows = self._projector.list_workouts(user_id=user_id, limit=limit)
         return [self._mapper.projection_row_to_summary(row) for row in rows]
+
