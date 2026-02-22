@@ -1,40 +1,11 @@
 from fastapi import FastAPI
-from controller.user import user
 
-app = FastAPI()
+from router.workout_router import router as workout_router
 
+app = FastAPI(title="Workout Tracker Event API")
+app.include_router(workout_router)
 
-# import routes here
-#create a controller, a datamapper, and then map all 
-# routes in a routerm then call therouters here, then 
-# crate middlewares like jwt etc - and protect routes in router for example. just like we learned to do an old API
 
 @app.get("/")
-async def root():
-    return {"message": "Raccoons rule"}
-
-@app.get("/raccoons")
-async def root():
-    return "THIS IS THE RACCOON PAGE"
-
-@app.get("/users")
-async def root():
-    return "RACCONS RULE"
-
-@app.get("/lyndon")
-async def root():
-    return user()
-
-@app.get("/testingnoise")
-async def root():
-    return "JUST TESTING THE NOISE"
-
-@app.get("/home")
-async def root():
-    return {"key": "value"}
-
-@app.get("/events")
-async def root():
-    return {"key": "value"}
-    # use the event sourcing py lib here - store events in event store and use snapshots
-
+async def root() -> dict[str, str]:
+    return {"message": "Workout tracker event API is running."}
