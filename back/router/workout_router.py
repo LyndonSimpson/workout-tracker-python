@@ -38,7 +38,7 @@ def get_workout_controller() -> WorkoutController:
         projector=projector,
     )
 
-
+#start here - follow the whole process (event sourcing main modules)
 @router.post("", response_model=WorkoutResponse, status_code=status.HTTP_201_CREATED)
 def create_workout(
     payload: CreateWorkoutRequest,
