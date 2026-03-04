@@ -31,11 +31,10 @@ class Set(Aggregate):
         self.created_at = self.date
         self.updated_at = self.created_at
 
-    @event("SetCompleted")
-    def log_exercise(self) -> None:
+    @event("Completed")
+    def complete(self) -> None:
         if self.status == "completed":
             raise ValueError("set already completed.")
         self.status = "completed"
         self.updated_at = utc_now_iso()
         
-
