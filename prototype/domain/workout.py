@@ -13,7 +13,6 @@ class Set(Aggregate):
         user_id: str,
         type: str,
         stats: str,
-        status: str,
         date: str,
     ) -> None:
         if not user_id:
@@ -26,15 +25,26 @@ class Set(Aggregate):
         self.user_id = user_id
         self.type = type
         self.stats = stats
-        self.status = "in_progress"
         self.date = utc_now_iso()
         self.created_at = self.date
         self.updated_at = self.created_at
 
-    @event("Completed")
-    def complete(self) -> None:
-        if self.status == "completed":
-            raise ValueError("set already completed.")
-        self.status = "completed"
+
+    @event("Progressed")
+    def update(
+        self,
+        stats: str,
+    ) -> None:
+        self.stats = stats
         self.updated_at = utc_now_iso()
+        
+    ########################## README ###########################
+    #remove this event and just do a updated event to track at how 
+    # many reps and how many weights we are at for each exercise - simple MVP
+    # @event("Completed")
+    # def complete(self) -> None:
+    #     if self.status == "completed":
+    #         raise ValueError("set already completed.")
+    #     self.status = "completed"
+    #     self.updated_at = utc_now_iso()
         
