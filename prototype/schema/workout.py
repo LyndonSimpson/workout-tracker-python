@@ -12,3 +12,10 @@ class CreateWorkoutResponse(BaseModel):
 class UpdateWorkoutRequest(BaseModel):
     user_id: str = Field(min_lenght=1)
     stats: str = Field(min_lenght=1)
+
+class WorkoutResponse(BaseModel):
+    id: str
+    user_id: str
+    type: str
+    stats: str
+    date: date
