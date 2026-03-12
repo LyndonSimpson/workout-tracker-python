@@ -4,6 +4,7 @@ from uuid import UUID
 from eventsourcing.application import AggregateNotFoundError
 from fastapi import APIRouter, Depends, HTTPException, Query, status
 from schema.workout import WorkoutResponse
+from controller.workout_controller import WorkoutController  # create this
 
 router = APIRouter(prefix="/workouts", tags=["Basic workout tracker for reps and max weights progress"])
 
@@ -23,3 +24,15 @@ def get_workout(
         return WorkoutResponse(**data)
     except AggregateNotFoundError as exc:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Workout not found") from exc
+
+router.get("/workouts", response_model=WorkoutsResponse)        # need to create workoutResponse class here
+def get_workouts(
+    workout_id: UUID,
+    controller: WorkoutController = Depends(get_workout_controller),
+) -> WorkoutsResponse:
+    try:
+        data = controller.get_workouts()
+        return WorkoutsResponse(**data)
+    except AggregateNotFoundError as exc:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Workouts not found") from exc
+
